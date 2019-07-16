@@ -11,3 +11,7 @@
 ###> IDE ###
 .idea/
 ###< IDE ###
+
+###> Others ###
+/exportedFiles
+###< Others ###
