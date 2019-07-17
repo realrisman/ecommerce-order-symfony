@@ -9,6 +9,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class ExportCommand extends Command
 {
@@ -35,6 +36,7 @@ class ExportCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $io = new SymfonyStyle($input, $output);
         $supportedFormats = ['csv', 'json', 'yaml', 'xml'];
         $filename = $input->getArgument('filename');
         $format = $input->getArgument('format');
@@ -42,29 +44,31 @@ class ExportCommand extends Command
         $file = sprintf("exportedFiles/%s.%s", $filename, $format);
 
         if (!in_array($format, $supportedFormats)) {
-            $output->writeln('<error>Please check your format input!</error>');
-            $output->writeln('<info>Supported formats is (csv, json, yaml, xml)</info>');
+            $io->error('Please check your format input!');
+            $io->note('Supported formats is (csv, json, yaml, xml)');
             return;
         }
 
-        $output->writeln('Exporting, please wait...');
-        $output->writeln($this->exportService->run($filename, $format));
+        $io->section('Exporting, please wait');
+        $io->success($this->exportService->run($filename, $format));
 
         if ($email) {
-            $output->writeln('Validate your email...');
+            $io->section('Validate your email');
 
             if (!$this->emailService->validate($email)) {
-                $output->writeln('<error>Email is not valid!</error>');
-                $output->writeln('Failed sending this file!');
+                $io->error('Email is not valid!');
+                $io->note('Failed sending this file!');
                 return;
             }
 
-            $output->writeln('Sending file to your email, please wait...');
-            $output->writeln($this->emailService->send($email, $file));
-            $output->writeln('<info>Email has been sent!</info>');
+            $io->block("Email is valid!");
+
+            $io->section('Sending file to your email, please wait');
+            $this->emailService->send($email, $file);
+            $io->success('Email has been sent!');
         }
 
         $executionTime = microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"];
-        $output->write("Execution Time: " . $executionTime);
+        $io->note("Execution Time: " . $executionTime);
     }
 }
