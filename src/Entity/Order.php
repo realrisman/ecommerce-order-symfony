@@ -2,9 +2,12 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @ApiResource()
+ *
  * @ORM\Table(name="orders")
  * @ORM\Entity(repositoryClass="App\Repository\OrderRepository")
  */
