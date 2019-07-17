@@ -1,6 +1,6 @@
-{% extends 'base.html.twig' %}
+<!DOCTYPE html>
 
-{% block title %}Order index{% endblock %}
+<title>Order index</title>
 
 {% block body %}
     <h1>Order index</h1>
@@ -19,7 +19,7 @@
         {% for order in orders %}
             <tr>
                 <td>{{ order.id }}</td>
-                <td>{{ order.orderDate ? order.orderDate|date('Y-m-d H:i:s T') : '' }}</td>
+                <td>{{ order.orderDate ? order.orderDate|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ order.discounts ? order.discounts|json_encode : '' }}</td>
                 <td>{{ order.shippingPrice }}</td>
                 <td>

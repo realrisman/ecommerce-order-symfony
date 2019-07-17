@@ -1,6 +1,6 @@
-{% extends 'base.html.twig' %}
+<!DOCTYPE html>
 
-{% block title %}Order{% endblock %}
+<title>Order</title>
 
 {% block body %}
     <h1>Order</h1>
@@ -13,7 +13,7 @@
         </tr>
         <tr>
             <th>Order_date</th>
-            <td>{{ order.orderDate ? order.orderDate|date('Y-m-d H:i:s T') : '' }}</td>
+            <td>{{ order.orderDate ? order.orderDate|date('Y-m-d H:i:s') : '' }}</td>
         </tr>
         <tr>
             <th>Discounts</th>

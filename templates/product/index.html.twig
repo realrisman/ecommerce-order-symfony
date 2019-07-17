@@ -1,6 +1,6 @@
-{% extends 'base.html.twig' %}
+<!DOCTYPE html>
 
-{% block title %}Product index{% endblock %}
+<title>Product index</title>
 
 {% block body %}
     <h1>Product index</h1>
@@ -16,7 +16,7 @@
             <th>Category</th>
             <th>Url</th>
             <th>Upc</th>
-            <th>Gtint14</th>
+            <th>Gtin14</th>
             <th>actions</th>
         </tr>
         </thead>
@@ -31,7 +31,7 @@
                 <td>{{ product.category ? product.category|json_encode : '' }}</td>
                 <td>{{ product.url }}</td>
                 <td>{{ product.upc }}</td>
-                <td>{{ product.gtint14 }}</td>
+                <td>{{ product.gtin14 }}</td>
                 <td>
                     <a href="{{ path('product_show', {'id': product.id}) }}">show</a>
                     <a href="{{ path('product_edit', {'id': product.id}) }}">edit</a>
