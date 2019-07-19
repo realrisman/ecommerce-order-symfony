@@ -25,14 +25,14 @@
 
 ## List of Commands
 ### Import data challenge to database
-* `php artisan import:run`
+* `php bin/console import:run`
 
 ### Export data challenge to any format (csv, json, yaml, xml)
-* `php artisan export:run {filename} {format}`
+* `php bin/console export:run {filename} {format}`
 > **Example** : `php bin/console app:export order-summary csv`
 
 ### Also you can email the output file using this command
-* `php artisan export:run {filename} {format} {email}`
+* `php bin/console export:run {filename} {format} {email}`
 > **Example** : `php bin/console app:export order-summary csv real.risman@gmail.com`
 
 ## API documentation
