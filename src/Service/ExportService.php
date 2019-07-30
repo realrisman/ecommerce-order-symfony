@@ -103,22 +103,36 @@ class ExportService
             $totalOrderValue += $totalPrice;
         }
 
+        $totalDiscounts = $this->getDiscounts($discounts, $totalOrderValue);
+        $totalOrderValue -= $totalDiscounts;
+
+        return money_format('%.2n', $totalOrderValue);
+    }
+
+    private function getDiscounts($discounts, $totalOrderValue)
+    {
+        $totalDiscounts = 0;
+        $totalDiscountPercent = 0;
+
         if (!empty($discounts)) {
             foreach ($discounts as $discount) {
                 $type = strtoupper($discount['type']);
                 $value = $discount['value'];
 
                 if ($type === 'DOLLAR') {
-                    $totalOrderValue -= $value;
+                    $totalDiscounts += $value;
                 }
                 if ($type === 'PERCENTAGE') {
-                    $totalDiscount = ($value * $totalOrderValue) / 100;
-                    $totalOrderValue -= $totalDiscount;
+                    $totalDiscountPercent += $value;
                 }
             }
         }
 
-        return money_format('%.2n', $totalOrderValue);
+        if ($totalDiscountPercent > 0) {
+           $totalDiscounts += ($totalDiscountPercent * $totalOrderValue) / 100;
+        }
+
+        return $totalDiscounts;
     }
 
     private function getAvgUnitPrice($items)
